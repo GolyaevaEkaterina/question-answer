@@ -1,6 +1,6 @@
 console.log('Привет, мир!')
 
-let currentAnswerId
+
 
 let answers = [
     {
@@ -41,30 +41,32 @@ function renderAnswers() {
     
    answers.forEach((answer) => {
     container.innerHTML += `
-    <div class="flex justify-between bg-blue-800 my-5 p-3 rounded-xl">
+    <div class="flex justify-between items-center bg-blue-800 my-5 p-3 rounded-xl">
         <p class="text-slate-50 text-lg">${answer.question}</p>
         <button class="hover:cursor-pointer" id="button-answer-open-${answer.id}"><i class="fa-solid fa-chevron-down text-slate-50" ></i></button>
         <button class="hover:cursor-pointer hidden" id="button-answer-close-${answer.id}"><i class="fa-solid fa-chevron-up text-slate-50""></i></button>
     </div>
-    <div class="hidden" id="container-answer-${answer.id}">
-        <p>${answer.reply}</p>
+    <div class="hidden mx-3" id="container-answer-${answer.id}">
+        <p class="text-blue-900 font-normal">${answer.reply}</p>
     </div>
     `
    })
 
    answers.forEach((answer) => {
     const buttonOpenAnswer = document.getElementById(`button-answer-open-${answer.id}`)
-    const makeOpenAnswer = () => openAnswer(answer.id) 
+    const makeOpenAnswer = () => openAnswer(answer) 
     buttonOpenAnswer.addEventListener ("click", makeOpenAnswer )
 
-    currentAnswerId = answer.id
+    const buttonCloseAnswer = document.getElementById(`button-answer-close-${answer.id}`)
+    const makeCloseAnswer = () => closeAnswer(answer) 
+    buttonCloseAnswer.addEventListener ("click", makeCloseAnswer )
    })
 }
 
 
 function openAnswer(answer) {
 
-    console.log(answer.id)
+    console.log(answer)
 
     const containerAnswer = document.getElementById(`container-answer-${answer.id}`)
     containerAnswer.style.display = "flex"
@@ -76,5 +78,22 @@ function openAnswer(answer) {
     buttonCloseAnswer.style.display = "flex"
 
 }
+
+function closeAnswer(answer) {
+
+    console.log(answer)
+
+    const containerAnswer = document.getElementById(`container-answer-${answer.id}`)
+    containerAnswer.style.display = "none"
+    
+    const buttonOpenAnswer = document.getElementById(`button-answer-open-${answer.id}`)
+    buttonOpenAnswer.style.display = "flex"
+
+    const buttonCloseAnswer = document.getElementById(`button-answer-close-${answer.id}`)
+    buttonCloseAnswer.style.display = "none"
+
+}
+
+
 
 renderAnswers()
